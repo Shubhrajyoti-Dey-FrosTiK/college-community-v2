@@ -1,19 +1,24 @@
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import path from 'path';
 import  mongoose  from 'mongoose';
 import postRoutes from './routes/postRoutes.js'
 import express from 'express'
 import cors from 'cors'
+import SignUp from './routes/SignUp.js'
+import Login from './routes/Login.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app=express();
 
+app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(cors())
+
 app.use("/api/",postRoutes);
+app.use("/api/signup/",SignUp);
+app.use("/api/login/",Login);
 // app.use(express.static(path.join(__dirname,'client','build')))
 
 // app.use("/",(request,response) => {
