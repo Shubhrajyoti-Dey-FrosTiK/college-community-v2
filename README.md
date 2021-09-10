@@ -2,6 +2,12 @@
 
 This is a project to build a community for the college
 
+## Dependencies :
+
+NodeJS :  https://nodejs.org/en/
+
+Yarn :  ```npm install --global yarn```
+
 ## How to get started ?
 
 Clone the repo 
