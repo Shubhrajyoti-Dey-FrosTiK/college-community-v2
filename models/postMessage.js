@@ -1,4 +1,3 @@
-import express, { request, response } from 'express'
 import mongoose from 'mongoose'
 
 const postSchema=mongoose.Schema({

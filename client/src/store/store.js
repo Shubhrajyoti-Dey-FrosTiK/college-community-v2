@@ -7,4 +7,4 @@ export const store=createStore(rootReducer);
 // Now we need to persist the store 
 export const persister=persistStore(store)
 
-export default { store, persister};
+export default { store, persister };
