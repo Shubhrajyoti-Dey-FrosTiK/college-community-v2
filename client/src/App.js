@@ -10,25 +10,20 @@ function App() {
   store.getState();
 
   function HandleClick() {
-    var t=document.getElementById("Title").value.toString()
-    var m=document.getElementById("Message").value.toString()
+    var t=document.getElementById("Name").value.toString()
+    var m=document.getElementById("Email").value.toString()
+    var p=document.getElementById("Password").value.toString()
 
     store.dispatch(addBug(t+" "+m))
 
     console.log(t);
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: t,
-        message: m
-      })
+        name: t,
+        email: m,
+        password: p
   };
     var res=[];
-    axios.post('/api/',{
-      status: t,
-      message: m
-    }).then(function (response) {
+    axios.post('/api/signup/',requestOptions).then(function (response) {
       console.log(response)
       res.status=response.data.status.toString()
       res.message=response.data.message.toString()
@@ -41,12 +36,16 @@ function App() {
       <h1>Experiment App</h1>
       <form>
         <label>
-            Title:
-            <input type="text" id="Title" />
+            Name:
+            <input type="text" id="Name" />
           </label>
           <br></br>
-          <label>Message
-          <input type="text" id="Message"></input>
+          <label>Email
+          <input type="text" id="Email"></input>
+          </label>
+          <br></br>
+          <label>Password
+          <input type="text" id="Password"></input>
           </label>
           <br></br>
          <Button onClick={HandleClick}>Submit</Button>
