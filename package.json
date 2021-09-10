@@ -1,0 +1,21 @@
+{
+  "name": "college-community",
+  "version": "1.0.0",
+  "description": "A community for the college",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect": "^3.7.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "serve-static": "^1.14.1"
+  }
+}
