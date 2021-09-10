@@ -1,16 +1,8 @@
 import express, { request, response } from 'express'
 import mongoose from 'mongoose'
-import { MongoClient } from 'mongodb';
 import postMessage from '../models/postMessage.js'
 
 const router=express.Router();
-
-const coll=mongoose.Collection.postMessage
-
-// router.get("/",(request,response) => {
-//     console.log("Routing works");
-//     response.send("This is working")
-// })
 
 router.post("/",async (request,response) =>  {
     console.log(request.body)
