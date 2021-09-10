@@ -1,4 +1,3 @@
-import reducer from "../reducers/index.js";
 import { createStore } from 'redux'
 import { persistStore } from 'redux-persist'
 import rootReducer from "../reducers/rootReducer.js";

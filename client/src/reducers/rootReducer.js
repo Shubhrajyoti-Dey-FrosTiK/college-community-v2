@@ -1,6 +1,6 @@
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from 'redux';
-import reducer from './index.js';
+import reducer from './reducers.js';
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
