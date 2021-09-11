@@ -18,12 +18,20 @@ function App() {
 
     console.log(t);
     const requestOptions = {
+      body:  {
         name: t,
         email: m,
         password: p
-  };
+      }
+    };
+    let config = {
+      headers: {
+        "Authorization" : "123"
+      }
+    }
+    
     var res=[];
-    axios.post('/api/signup/',requestOptions).then(function (response) {
+    axios.post('/api/login/',requestOptions,config).then(function (response) {
       console.log(response)
       res.status=response.data.status.toString()
       res.message=response.data.message.toString()

@@ -1,33 +1,17 @@
 import express, { request, response } from 'express'
 import mongoose from 'mongoose'
 import postMessage from '../models/postMessage.js'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+import verify from '../middlewares/verify.js'
 
 const router=express.Router();
 
-router.post("/",async (request,response) =>  {
-    console.log(request.body)
-    console.log("REQUEST RECEIVED");
-    let msg = new postMessage({
-        title: request.body.status,
-        message: request.body.message
-      })
-    try {
-        msg.save()
-            .then(doc => {
-                console.log(doc)
-            })
-            .catch(err => {
-                console.error(err)
-            })
-    } catch (error) {
-        console.log("Duplicate Exists")
-    }
-    
-    let temp=await postMessage.find({})
+router.post("/",verify,async (request,response) =>  {
+    console.log("WOrking");
     response.send({
-            message: "Request Received successfully",
-            status: "OK",
-            db: temp
+        status: "200",
+        message : "Authenticated"
     })
 })
 
