@@ -6,6 +6,7 @@ const userLoginStatusSchema=mongoose.Schema({
         require : true
     },
     keepLoggedIn : String,
+    token : String,
     loginStatus : String
 })
 
