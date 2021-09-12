@@ -18,22 +18,19 @@ function App() {
 
     console.log(t);
     const requestOptions = {
-      body:  {
         name: t,
         email: m,
         password: p
-      }
     };
     let config = {
       headers: {
-        "Authorization" : "123"
+        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEMTIxNDM0NSIsImlhdCI6MTYzMTQzOTczOH0.KnKYjiyTp91Pwcugj5U69ejsFWW9ydzznRs_I5iTbaU"
       }
     }
     
     var res=[];
-    axios.post('/api/login/',requestOptions,config).then(function (response) {
+    axios.post('/api/postRoutes/',requestOptions,config).then(function (response) {
       console.log(response)
-      res.status=response.data.status.toString()
       res.message=response.data.message.toString()
     })
     console.log(res);
