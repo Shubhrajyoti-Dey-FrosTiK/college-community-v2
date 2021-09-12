@@ -7,6 +7,7 @@ import cors from 'cors'
 import SignUp from './routes/SignUp.js'
 import Login from './routes/Login.js'
 import dotenv from 'dotenv'
+import bodyParser from 'body-parser';
   
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

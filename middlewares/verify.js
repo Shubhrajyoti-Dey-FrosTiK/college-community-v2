@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default function verify(request,response,next){
-    console.log(request.headers.authorization);
+    // console.log(request.headers.authorization);
     // let token=request.headers.authorization;
     // if (!token){return res.status(403).send({ auth: false, message: 'No token provided.' });}
     // jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {

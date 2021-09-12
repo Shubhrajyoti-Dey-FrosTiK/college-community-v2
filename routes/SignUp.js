@@ -4,6 +4,7 @@ import userModel from '../models/userModel.js';
 import { createRequire } from 'module';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import encrypt from '../encryption/encryt.js';
 
 const router=express.Router();
 dotenv.config();
@@ -15,7 +16,7 @@ dotenv.config();
 // var config = createRequire('../config');
 
 router.post("/",async (request,response) =>  {
-    console.log("REQUEST RECEIVED")
+    console.log("REQUEST RECEIVED ON SIGNUP")
     let finder=await userModel.find({
         email : request.body.email
     })
@@ -33,12 +34,14 @@ router.post("/",async (request,response) =>  {
             })
         }else{
             var token = jwt.sign({email:request.body.email},process.env.SECRET_KEY,{
-                algorithm: "HS256"
+                algorithm: "HS256",
+                expiresIn:86400
             });
+            var pass=await encrypt(request.body.password)
             userModel.create({
                 name : request.body.name,
                 email : request.body.email,
-                password : request.body.password
+                password : pass
             })
             
             userLoginStatus.create({
