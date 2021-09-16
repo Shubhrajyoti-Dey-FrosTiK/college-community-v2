@@ -27,7 +27,7 @@ router.post("/",async (request,response) =>  {
         })
     }else{
         let password=request.body.password;
-        if(password!=request.body.name){
+        if(password!=request.body.conpass){
             response.send({
                 status: "401",
                 message: "Password not matching"

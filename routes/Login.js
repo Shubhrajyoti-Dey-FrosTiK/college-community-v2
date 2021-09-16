@@ -26,7 +26,7 @@ router.post("/",async (request,response) =>  {
             algorithm: "HS256",
             expiresIn:86400
         });
-        userModel.updateMany(
+        await userModel.updateMany(
             {email : request.body.email},
             {
                 $set: {
