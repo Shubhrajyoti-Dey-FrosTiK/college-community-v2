@@ -131,3 +131,102 @@ Now your frontend server should have started successfully
 ## Basics about the app 
 
 The app is a MERN stack app and the frontend will be running on ``` http://localhost:3000/ ``` and the backend will be running on ```http://localhost:5050/ ```
+
+--------
+
+## Guide to API Calling in Frontend :
+
+Here in this project we will be using ```axios``` to do the API calling.
+
+In the repo ```axios``` is already present in the ```package.json``` of the ```/client``` folder (which is the frontend here)
+
+So in this project there is no additional need to add ```axios``` to your project.
+
+If you are starting a new project in case you need to add ```axios``` as a dependency in your project.
+
+To do this run the following command :
+
+```
+yarn add axios
+```
+OR
+```
+npm i axios
+```
+
+This is the official documentation of ```axios``` https://axios-http.com/docs/intro
+
+### Discussing some basic concepts :
+
+**Requests**
+
+Requests in short are process of calling the server to push or get some data from the server. We generally use 4 types of requests namely ```GET , POST , PUT , DELETE```.Each request has some parts and we generally use two parts to make a successful request namely ```headers``` and ```body```. Headers generally consists of stuff like Auth Tokens etc and the body consisits of all tyoes of data which the server requires to give a response. We will discuss in brief about each type of request below
+
+**GET Request :**
+
+This type of a request is generally used to fetch sone data from the server side. We cannot dont create a ```body``` of this type of a request and pass the required specified details via the headers of this request. This is a small code example of ```GET Request``` using ```axios``` 
+
+```
+axios.get('/api/user/',{
+       headers:{     
+       "authorization":"<YOUR_AUTHORIZATION_TOKEN>",
+       "ANY_OTHER_INFO": "<INFO>"
+       }
+}).then(response => console.log(response));
+```
+So basically the above code is an example of a ```GET Requst``` using ```axios```. Here as an example we have passed an ```Authorization_Token``` but anything can be passed. Here we will for example get the details of the user
+
+```"/api/user/"``` is the ```URL``` of the website where you want to send the request. In our project (before production) it will be pointing to ```http://localhost:5050/api/user``` as here in our project (before production) a frontend `proxy` is used which is defined in the `package.json` of the `/client` folder . So when we write here `/api/user` here in our project it will be directly pointing to ```http://localhost:5050/api/user```
+
+```.then()``` is basically an event which will trigger after the response is received in from the server side. In this example we are just printing the response got from our server.
+
+
+**POST Request :**
+
+This type of a request is used to push some data to the server (eg. pushing data to our database etc). Here the data is passed within the ```body``` and headers are used for any other purposes like authentication etc. This is a code example of creating a ```POST Request``` using ```axios```
+
+```
+axios.post('/api/signup/',{
+         "email" : "sample@gmail.con",
+         "<ANY_OTHER_FIELD>" : "<INFO>" 
+       },{
+         headers:{
+          "authorization":"<YOUR_AUTHORIZATION_TOKEN>"
+         }
+}).then(response => console.log(response));
+```
+This is basically a ```POST Request``` using ```axios``` where here as an example we have used the ```body``` to pass on the email and other details of an user to push into for example a DB and ther ```headers``` to authenticate the user. At last we are just printing the responses.
+
+**PUT Request**
+
+This type of a request is sent to server when we want ot update anything. For example updating the profile of a person in a database. We pass all the info to be editteed in the ```body``` of the request and use ```headers``` for the same purpose as discussed before. This is a code example of a ```PUT Request``` using ```axios```.
+
+```
+axios.put('/api/user/',{
+         "email":m,
+         "<ANY_OTHER_FIELD>" : "<INFO>"
+       },{
+         headers:{
+           "authorization":"<YOUR_AUTHORIZATION_TOKEN>"
+         }
+}).then(response => console.log(response));
+```
+Here basically we are just sending the email and other info to the server. The server will then for example find the entry in the database using the primary key and will update the details according to the ```body``` passed. Rest all the explainations to the code is similiar to the above mentioned requests.
+
+**DELETE Request**
+
+As the name suggests, this type of a request is used to delete something. For example deleting some entry from the database. We cannot pass anythng in the ```body``` here and everything is passed by the ```headers``` of the request. This is a code example of a ```DELETE Request``` using ```axios```.
+
+```
+ axios.delete('/api/user/',{
+       headers:{
+         "authorization":"<YOUR_AUTHORIZATION_TOKEN>",
+         "<PRIMARY_KEY>":"<DB_PRIMARY_KEY>
+       }
+}).then(response => console.log(response));
+```
+Here as an example we have passed the ```primary key``` and the auth token. So here the server will check the database and delete the specified entry.
+
+If you wish to know more about requests please visit https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+
