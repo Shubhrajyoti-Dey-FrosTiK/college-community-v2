@@ -13,27 +13,39 @@ function App() {
     var t=document.getElementById("Name").value.toString()
     var m=document.getElementById("Email").value.toString()
     var p=document.getElementById("Password").value.toString()
+    var cp=document.getElementById("ConPassword").value.toString()
 
     store.dispatch(addBug(t+" "+m))
-
-    console.log(t);
-    const requestOptions = {
-        name: t,
-        email: m,
-        password: p
-    };
-    let config = {
-      headers: {
-        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEMTIxNDM0NSIsImlhdCI6MTYzMTQzOTczOH0.KnKYjiyTp91Pwcugj5U69ejsFWW9ydzznRs_I5iTbaU"
-      }
-    }
     
-    var res=[];
-    axios.post('/api/postRoutes/',requestOptions,config).then(function (response) {
-      console.log(response)
-      res.message=response.data.message.toString()
-    })
-    console.log(res);
+    // Get request 
+    // axios.get('/api/user/',{
+    //   headers:{
+    //     "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEIiwiaWF0IjoxNjMxODA3Njc3LCJleHAiOjE2MzE4OTQwNzd9.iGJ_1T_KXzcOdMXluWxYibCK3jRk3uC-dgkYLXLE5Fg",
+    //     "email":m
+    //   }
+    // }).then(response => console.log(response));
+    
+    // Put request 
+    // axios.put('/api/user/',{
+    //     "email":m,
+    //     "name":t,
+    //     "password":p
+    //   },{
+    //     headers:{
+    //       "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEIiwiaWF0IjoxNjMxODA3Njc3LCJleHAiOjE2MzE4OTQwNzd9.iGJ_1T_KXzcOdMXluWxYibCK3jRk3uC-dgkYLXLE5Fg"
+    //     }
+    //   }).then(response => console.log(response));
+    
+    // Delete request 
+    // axios.delete('/api/user/',{
+    //   headers:{
+    //     "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEIiwiaWF0IjoxNjMxODA3Njc3LCJleHAiOjE2MzE4OTQwNzd9.iGJ_1T_KXzcOdMXluWxYibCK3jRk3uC-dgkYLXLE5Fg",
+    //     "email":m
+    //   }
+    // }).then(response => console.log(response));
+  
+
+    console.log("clicked")
   }
 
   return (
@@ -51,6 +63,10 @@ function App() {
           <br></br>
           <label>Password
           <input type="text" id="Password"></input>
+          </label>
+          <br></br>
+          <label>Confirm Password
+          <input type="text" id="ConPassword"></input>
           </label>
           <br></br>
          <Button onClick={HandleClick}>Submit</Button>

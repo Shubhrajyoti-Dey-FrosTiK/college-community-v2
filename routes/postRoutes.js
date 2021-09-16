@@ -8,7 +8,6 @@ import verify from '../middlewares/verify.js'
 const router=express.Router();
 
 router.post("/",verify,async (request,response) =>  {
-    // console.log("WOrking");
     response.send({
         status: "200",
         message : "Authenticated"
