@@ -3,9 +3,28 @@ import {Button} from 'react-bootstrap'
 import axios from 'axios'
 import { store } from './store/store.js';
 import { addBug } from './actions/actions.js';
-
+import io from 'socket.io-client';
+import socketClient  from "socket.io-client";
+import { useEffect,useState } from 'react'
 
 function App() {
+  const PORT=process.env.PORT || 3000;
+  const SERVER=`http://${window.location.hostname}:${PORT}`;
+
+  // Now we have to connect to the server (Socket IO in this case )
+  var socket = socketClient(SERVER);
+  // var io=new io()
+  
+  
+  console.log(SERVER);
+  useEffect(() => {
+    socket.emit('message',"Client side")
+
+    // This is a client side socket to accept any response from the server 
+    socket.on('message', msg => {
+      console.log(msg);
+  });
+  });
 
   store.getState();
 
@@ -30,6 +49,18 @@ function App() {
     //     "email":m,
     //     "name":t,
     //     "password":p
+    //   },{
+    //     headers:{
+    //       "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEIiwiaWF0IjoxNjMxODA3Njc3LCJleHAiOjE2MzE4OTQwNzd9.iGJ_1T_KXzcOdMXluWxYibCK3jRk3uC-dgkYLXLE5Fg"
+    //     }
+    //   }).then(response => console.log(response));
+
+    // Post request 
+    // axios.post('/api/signup/',{
+    //     "email":m,
+    //     "name":t,
+    //     "password":p,
+    //     "conpass":cp
     //   },{
     //     headers:{
     //       "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNEIiwiaWF0IjoxNjMxODA3Njc3LCJleHAiOjE2MzE4OTQwNzd9.iGJ_1T_KXzcOdMXluWxYibCK3jRk3uC-dgkYLXLE5Fg"
