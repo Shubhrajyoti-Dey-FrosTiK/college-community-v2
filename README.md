@@ -166,7 +166,7 @@ Requests in short are process of calling the server to push or get some data fro
 
 This type of a request is generally used to fetch sone data from the server side. We cannot dont create a ```body``` of this type of a request and pass the required specified details via the headers of this request. This is a small code example of ```GET Request``` using ```axios``` 
 
-```
+```js
 axios.get('/api/user/',{
        headers:{     
        "authorization":"<YOUR_AUTHORIZATION_TOKEN>",
@@ -185,7 +185,7 @@ So basically the above code is an example of a ```GET Requst``` using ```axios``
 
 This type of a request is used to push some data to the server (eg. pushing data to our database etc). Here the data is passed within the ```body``` and headers are used for any other purposes like authentication etc. This is a code example of creating a ```POST Request``` using ```axios```
 
-```
+```js
 axios.post('/api/signup/',{
          "email" : "sample@gmail.con",
          "<ANY_OTHER_FIELD>" : "<INFO>" 
@@ -201,7 +201,7 @@ This is basically a ```POST Request``` using ```axios``` where here as an exampl
 
 This type of a request is sent to server when we want ot update anything. For example updating the profile of a person in a database. We pass all the info to be editteed in the ```body``` of the request and use ```headers``` for the same purpose as discussed before. This is a code example of a ```PUT Request``` using ```axios```.
 
-```
+```js
 axios.put('/api/user/',{
          "email":m,
          "<ANY_OTHER_FIELD>" : "<INFO>"
@@ -217,7 +217,7 @@ Here basically we are just sending the email and other info to the server. The s
 
 As the name suggests, this type of a request is used to delete something. For example deleting some entry from the database. We cannot pass anythng in the ```body``` here and everything is passed by the ```headers``` of the request. This is a code example of a ```DELETE Request``` using ```axios```.
 
-```
+```js
  axios.delete('/api/user/',{
        headers:{
          "authorization":"<YOUR_AUTHORIZATION_TOKEN>",
