@@ -24,6 +24,12 @@ function App() {
     socket.on('message', msg => {
       console.log(msg);
   });
+    socket.on('messageRoom',message=>{
+      console.log(message);
+    })
+    socket.on('messageTo',message=>{
+      console.log(message);
+    })
   });
 
   store.getState();
@@ -77,6 +83,19 @@ function App() {
   
 
     console.log("clicked")
+    socket.emit('joinRoom','Room1')
+  }
+
+  function HandleSendRoom(){
+    var t=document.getElementById("Name").value.toString()
+    socket.emit('messageRoom','Room1',t)
+    
+  }
+  function HandleSendUser(){
+    var t=document.getElementById("Name").value.toString()
+    var m=document.getElementById("Email").value.toString()
+    socket.emit('messageTo',m,t)
+    
   }
 
   return (
@@ -101,6 +120,8 @@ function App() {
           </label>
           <br></br>
          <Button onClick={HandleClick}>Submit</Button>
+         <Button onClick={HandleSendRoom}>Send</Button>
+         <Button onClick={HandleSendUser}>Send</Button>
       </form>
     </div>
   );
