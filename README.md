@@ -149,10 +149,6 @@ To do this run the following command :
 ```
 yarn add axios
 ```
-OR
-```
-npm i axios
-```
 
 This is the official documentation of ```axios``` https://axios-http.com/docs/intro
 
@@ -273,7 +269,15 @@ The method we do is, when a user logs in or signs up we give the user details li
 
 ### Implementing JWT
 
-So whenever an user tries to login/sign up we give the details to JWT to sign and give a `Token` back. This is the code example 
+First we need to add `JWT` as our backend dependency
+
+To do so go to the folder which contains `server.js` in your terminal and run
+
+```
+yarn add jsonwebtoken
+```
+
+So now, whenever an user tries to login/sign up we give the details to JWT to sign and give a `Token` back. This is the code example which is implemented at the backend when the user signs up/logs in 
 
 ```js
 var token = jwt.sign({email:request.body.email,<any_other_info>:<info>},process.env.SECRET_KEY,{
