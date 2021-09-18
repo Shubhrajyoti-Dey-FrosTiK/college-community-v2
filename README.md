@@ -229,4 +229,121 @@ Here as an example we have passed the ```primary key``` and the auth token. So h
 
 If you wish to know more about requests please visit https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 
+------------------
 
+## Guide to Authentication ( Auth0 )
+
+This will be a guide to authentication in web. 
+
+Here we will be talking about `JWT ( JSON Web Tokens )`
+
+### Why do we need Authentication ?
+
+When we develop a website, we can classify a page into two types :-
+
+1. Pages that are available to all
+2. Pages that are available to a specific group of users ( eg Logged in users )
+
+So it may seem that its easy just maintaining a DB and creating a login system.
+
+But problem arises when a normal user ( who is not logged in ) tries to visit a page which is only for logged in users.
+
+Ok, so now you may be thinking of a verifying the user with the DB everytome you visit the page. But there is a problem in that too.
+
+So when an external user tries to visit the 'secured' page then obviously the user does not provide any email or password to authenticate. So you dont have any information with and the request thus may fail breaking your website.
+
+So rather than following that approach we implement ``JWT``
+
+### What is JWT ?
+
+JWT (JSON Web Tokens) gerates a `Token` with some expiry time (although optional) based upon some fields which is provided.
+
+
+**Think it like this :**
+
+You are a customer and you have a problem .
+
+So now you go to the customer service where you tell all your problem. Now the customer service thinks that this problem may also come in future and obviously the customer will not happily explain all the same problem in the future again.
+
+So what the customer service does is create a list of all the problems and makes a receipt by 'signing' in it so that in the future if the user have to express the same problem he has to just show the receipt. Moreover the receipt has a signature of the customer service so it can be validated as a genuine receipt.
+
+Coming to JWT now :
+
+The method we do is, when a user logs in or signs up we give the user details like userID,password etc to JWT and what JWT does is it gives us a **signed** `Token`. So whenever we try to visit a secured page JWT verifies the Token if it valid or not and show the required page if validated.
+
+### Implementing JWT
+
+So whenever an user tries to login/sign up we give the details to JWT to sign and give a `Token` back. This is the code example 
+
+```js
+var token = jwt.sign({email:request.body.email,<any_other_info>:<info>},process.env.SECRET_KEY,{
+     algorithm: "HS256",
+     expiresIn:86400
+});
+```
+In this example `JWT` signs a the info provided which here in this example is email of the user and may be other info. We then pass on `process.env.SECRET_KEY` which is a random key (any string) stored in our `.env` file for security purposes. Then some paramenters are passed which specify the encoding type of the `Token` and the expire property ( Here we used 86400, so it will expire after a day as a day has 86400 secs ). 
+
+So now we have got a signed token which we return back to the frontend ( which is the `/client` foleder here )
+
+Now moving on to the frontend , the frontend has to store the token as it has to use this token everytime to authenticate while visiting a secured page. So in the frontend this is a code example to do so 
+
+```js
+import { useState } from 'react'
+
+const [token, setToken] = useState('');
+
+// After getting the Token from the server response 
+setToken(<TOKEN_FROM_RESPONSE>)
+```
+
+Now the token gets stored in `localstorage` of the browser and can access it from the variable `token`. We have used the `useState()` hook of React to do so.
+
+**Now to verify while visiting a secured page :**
+
+So now while viisting a sucured page we have to pass this token `as a header in the APO Calling`. This is a code example 
+
+```js
+axios.get('/api/user/',{
+   headers:{
+     "authorization":<TOKEN>
+   }
+}).then(response => console.log(response));
+```
+So in this API Calling we pass on the `TOKEN` in the header as `"authorization"`
+
+So now coming to NodeJS part 
+
+While receiving this request in our express server, put a middleware in between. This is a code example
+
+```js
+router.put("/",verify,async (request,response) =>  {
+    ...
+})    
+```
+Here we use a function verify as a middleware. 
+
+**What is a middleware ?**
+
+Basically middleware is a function which gets triggered first before procesing a request in express server. In a middleware function we use a keyword `next()` to continue to process the request ( in short breaking out of the middleware funciton ).
+
+So as we used `verify` as a middleware function here, this is a code example 
+
+```js
+export default function verify(request,response,next){
+    const token = request.query.token || request.headers["x-access-token"]||request.headers.authorization;
+    if (!token) {
+        return response.status(403).send("A token is required for authentication");
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        return next();
+    } catch (err) {
+        return response.status(401).send("Invalid Token");
+    }
+}
+```
+Now here first we retrieve the token from the header. Now if there is no token sent by the frontend request it will return from the funciton and will not proceed foward. Now if there is s token now use `JWT` to verify that the token is a valid token or not. Now if it is a valid token it goes t the actual main express function from where the midddleware got called and the user is thus authenticated. Now if the token is not valid then it breaks from the function.
+
+In this way we use `JWT` to authenticate.
+
+If you wish to learn more about `JWT` visit https://jwt.io/introduction
