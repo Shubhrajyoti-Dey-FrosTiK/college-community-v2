@@ -31,7 +31,7 @@ const io = new Server(server);
 // Firstly we need to set up the connection with SocketIO 
 io.on('connection', (socket) => {
     // As the socket gets connected it will show this message in the server log 
-    console.log('a user connected');
+    console.log('User ID :',socket.id," connected");
 
     // Now we have to listen to any calls from the client side 
     socket.on('message', msg => {
@@ -41,11 +41,33 @@ io.on('connection', (socket) => {
         //  the response to everyone including the sender 
         io.emit('message',"From the server")
 
-        // socket represents the whole distributer here 
+        // io represents the whole server here 
+        // socket represents an independent distributer
         // So when we do socket.broadcast.emit it goes to everyone 
         // except the sender 
         socket.broadcast.emit('Broadcast message')
     });
+
+    socket.on('joinRoom',roomID=>{
+        console.log("joined to room ",roomID);
+        socket.join(roomID)
+    })
+
+    socket.on('messageRoom',(roomID,message)=>{
+        console.log(socket.id ,"sent a message in ",roomID," message : ",message);
+
+        // socket.to(<ROOM_ID>).emit(....) will send the message to everyone in the room 
+        // except the sender 
+        socket.to(roomID).emit('messageRoom',message)
+    }) 
+
+    socket.on('messageTo',(userID,message)=>{
+        console.log(socket.id ,"sent a message in ",userID," message : ",message);
+
+        // socket.to(<ROOM_ID>).emit(....) will send the message to everyone in the room 
+        // except the sender 
+        socket.to(userID).emit('messageTo',message)
+    }) 
 });
 
 /**-------------\ Socket IO |----------- */
@@ -79,12 +101,18 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(cors())
 
+
+/** ------------|API Routes|------------- */
+
 app.use("/api/",postRoutes);
 app.use("/api/signup/",SignUp);
 app.use("/api/login/",Login);
 app.use("/api/user/",User);
 app.use("/api/postRoutes/",postRoutes)
 // app.use(express.static(path.join(__dirname,'client','build')))
+
+/** ------------|API Routes|------------- */
+
 
 app.use("/",(request,response) => {
 //     response.sendFile(path.join(__dirname,"client","build","index.html"))
