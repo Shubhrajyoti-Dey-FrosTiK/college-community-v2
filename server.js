@@ -2,7 +2,6 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import  mongoose  from 'mongoose';
 import postRoutes from './routes/postRoutes.js'
-import Chat from './routes/Chat.js'
 import User from './routes/User.js'
 import express from 'express'
 import cors from 'cors'
@@ -42,6 +41,9 @@ io.on('connection', (socket) => {
         //  the response to everyone including the sender 
         io.emit('message',"From the server")
 
+        // socket represents the whole distributer here 
+        // So when we do socket.broadcast.emit it goes to everyone 
+        // except the sender 
         socket.broadcast.emit('Broadcast message')
     });
 });
@@ -82,7 +84,6 @@ app.use("/api/signup/",SignUp);
 app.use("/api/login/",Login);
 app.use("/api/user/",User);
 app.use("/api/postRoutes/",postRoutes)
-app.use("/api/chat/",Chat)
 // app.use(express.static(path.join(__dirname,'client','build')))
 
 app.use("/",(request,response) => {
