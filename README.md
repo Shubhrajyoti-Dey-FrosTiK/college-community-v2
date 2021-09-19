@@ -280,6 +280,8 @@ yarn add jsonwebtoken
 So now, whenever an user tries to login/sign up we give the details to JWT to sign and give a `Token` back. This is the code example which is implemented at the backend when the user signs up/logs in 
 
 ```js
+import jwt from 'jsonwebtoken'
+
 var token = jwt.sign({email:request.body.email,<any_other_info>:<info>},process.env.SECRET_KEY,{
      algorithm: "HS256",
      expiresIn:86400
