@@ -7,6 +7,12 @@ import io from 'socket.io-client';
 import socketClient  from "socket.io-client";
 import { useEffect,useState } from 'react'
 import  Navbar from './components/navbar/Navbar.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const PORT=process.env.PORT || 3000;
@@ -101,30 +107,39 @@ function App() {
 
   return (
     <div className="App">\
-    <Navbar/>
-      <h1>Experiment App</h1>
-      <form>
-        <label>
-            Name:
-            <input type="text" id="Name" />
-          </label>
-          <br></br>
-          <label>Email
-          <input type="text" id="Email"></input>
-          </label>
-          <br></br>
-          <label>Password
-          <input type="text" id="Password"></input>
-          </label>
-          <br></br>
-          <label>Confirm Password
-          <input type="text" id="ConPassword"></input>
-          </label>
-          <br></br>
-         <Button onClick={HandleClick}>Submit</Button>
-         <Button onClick={HandleSendRoom}>Send</Button>
-         <Button onClick={HandleSendUser}>Send</Button>
-      </form>
+    <Router>
+        <Switch>
+            <Route exact path="/">
+            <Navbar/>
+                <h1>Experiment App</h1>
+                <form>
+                  <label>
+                      Name:
+                      <input type="text" id="Name" />
+                    </label>
+                    <br></br>
+                    <label>Email
+                    <input type="text" id="Email"></input>
+                    </label>
+                    <br></br>
+                    <label>Password
+                    <input type="text" id="Password"></input>
+                    </label>
+                    <br></br>
+                    <label>Confirm Password
+                    <input type="text" id="ConPassword"></input>
+                    </label>
+                    <br></br>
+                  <Button onClick={HandleClick}>Submit</Button>
+                  <Button onClick={HandleSendRoom}>Send</Button>
+                  <Button onClick={HandleSendUser}>Send</Button>
+                </form>
+           </Route>
+           <Route exact path={"/path2"}>
+             <div>Path 2</div>
+           </Route>
+        </Switch>
+    </Router>
     </div>
   );
 }
