@@ -6,6 +6,7 @@ import { addBug } from './actions/actions.js';
 import io from 'socket.io-client';
 import socketClient  from "socket.io-client";
 import { useEffect,useState } from 'react'
+import  Navbar from './components/navbar/Navbar.js';
 
 function App() {
   const PORT=process.env.PORT || 3000;
@@ -99,7 +100,8 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App">\
+    <Navbar/>
       <h1>Experiment App</h1>
       <form>
         <label>
