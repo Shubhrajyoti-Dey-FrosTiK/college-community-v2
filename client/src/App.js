@@ -13,6 +13,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Login from './pages/Login';
 
 function App() {
   const PORT=process.env.PORT || 3000;
@@ -110,32 +111,36 @@ function App() {
     <Router>
         <Switch>
             <Route exact path="/">
-            <Navbar/>
-                <h1>Experiment App</h1>
-                <form>
-                  <label>
-                      Name:
-                      <input type="text" id="Name" />
-                    </label>
-                    <br></br>
-                    <label>Email
-                    <input type="text" id="Email"></input>
-                    </label>
-                    <br></br>
-                    <label>Password
-                    <input type="text" id="Password"></input>
-                    </label>
-                    <br></br>
-                    <label>Confirm Password
-                    <input type="text" id="ConPassword"></input>
-                    </label>
-                    <br></br>
-                  <Button onClick={HandleClick}>Submit</Button>
-                  <Button onClick={HandleSendRoom}>Send</Button>
-                  <Button onClick={HandleSendUser}>Send</Button>
-                </form>
-           </Route>
-           <Route exact path={"/path2"}>
+              <Navbar/>
+                  <h1>Experiment App</h1>
+                  <form>
+                    <label>
+                        Name:
+                        <input type="text" id="Name" />
+                      </label>
+                      <br></br>
+                      <label>Email
+                      <input type="text" id="Email"></input>
+                      </label>
+                      <br></br>
+                      <label>Password
+                      <input type="text" id="Password"></input>
+                      </label>
+                      <br></br>
+                      <label>Confirm Password
+                      <input type="text" id="ConPassword"></input>
+                      </label>
+                      <br></br>
+                    <Button onClick={HandleClick}>Submit</Button>
+                    <Button onClick={HandleSendRoom}>Send</Button>
+                    <Button onClick={HandleSendUser}>Send</Button>
+                  </form>
+            </Route>
+            <Route exact path={'/login'}>
+              <Navbar/>
+              <Login/>
+            </Route>
+            <Route exact path={"/path2"}>
              <div>Path 2</div>
            </Route>
         </Switch>
